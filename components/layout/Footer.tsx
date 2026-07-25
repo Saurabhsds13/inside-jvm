@@ -106,7 +106,15 @@ export default function Footer() {
 
         <div className="mt-10 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-slate-600">
-            © {currentYear} InsideJVM. Built to make JVM internals accessible to every Java developer.
+            © {currentYear} InsideJVM — Designed & built by{' '}
+            <a
+              href="https://github.com/Saurabhsds13"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-white transition-colors"
+            >
+              Saurabh Sonawane
+            </a>
           </p>
           <p className="text-xs text-slate-600">
             Powered by{' '}

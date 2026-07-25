@@ -7,6 +7,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-06B6D4?logo=tailwindcss)](https://tailwindcss.com)
 
+**Designed & built by [Saurabh Sonawane](https://github.com/Saurabhsds13)**
+
 **Live demo:** https://saurabhsds13.github.io/inside-jvm
 
 ---
@@ -291,6 +293,12 @@ All JVM content is grounded in official specifications and authoritative enginee
 ## License
 
 MIT — free to use, modify, and distribute. Attribution appreciated.
+
+---
+
+## Author
+
+**Saurabh Sonawane** — [github.com/Saurabhsds13](https://github.com/Saurabhsds13)
 
 ---
 

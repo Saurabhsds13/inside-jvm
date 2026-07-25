@@ -51,6 +51,17 @@ export default function AboutPage() {
               <div>
                 <h1 className="text-4xl font-bold text-white">About InsideJVM</h1>
                 <p className="text-slate-400 mt-1">Interactive JVM Learning Platform</p>
+                <p className="text-sm text-slate-500 mt-1">
+                  Built by{' '}
+                  <a
+                    href="https://github.com/Saurabhsds13"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-400 hover:text-blue-300 transition-colors font-medium"
+                  >
+                    Saurabh Sonawane
+                  </a>
+                </p>
               </div>
             </div>
 

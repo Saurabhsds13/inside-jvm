@@ -25,8 +25,8 @@ export const metadata: Metadata = {
     'ZGC',
     'Java interview',
   ],
-  authors: [{ name: 'InsideJVM' }],
-  creator: 'InsideJVM',
+  authors: [{ name: 'Saurabh Sonawane', url: 'https://github.com/Saurabhsds13' }],
+  creator: 'Saurabh Sonawane',
   openGraph: {
     type: 'website',
     locale: 'en_US',
