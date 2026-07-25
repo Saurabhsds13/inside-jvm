@@ -34,7 +34,7 @@ export default function Footer() {
               The most interactive JVM learning platform. Understand how Java really works — under the hood.
             </p>
             <a
-              href="https://github.com/Saurabh-2003/inside-jvm"
+              href="https://github.com/Saurabhsds13/inside-jvm"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 mt-4 text-sm text-slate-400 hover:text-white transition-colors"

@@ -162,7 +162,7 @@ export default function AboutPage() {
                   or improve an animation? Contributions are welcome.
                 </p>
                 <a
-                  href="https://github.com/Saurabh-2003/inside-jvm"
+                  href="https://github.com/Saurabhsds13/inside-jvm"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.06] border border-white/[0.1] text-sm text-white hover:bg-white/[0.1] transition-all"

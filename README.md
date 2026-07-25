@@ -2,12 +2,12 @@
 
 > The most interactive JVM learning platform on the web. Visualize how the Java Virtual Machine works using live animations and simulations — not static text.
 
-[![Deploy to GitHub Pages](https://github.com/Saurabh-2003/inside-jvm/actions/workflows/deploy.yml/badge.svg)](https://github.com/Saurabh-2003/inside-jvm/actions/workflows/deploy.yml)
+[![Deploy to GitHub Pages](https://github.com/Saurabhsds13/inside-jvm/actions/workflows/deploy.yml/badge.svg)](https://github.com/Saurabhsds13/inside-jvm/actions/workflows/deploy.yml)
 [![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-06B6D4?logo=tailwindcss)](https://tailwindcss.com)
 
-**Live demo:** https://saurabh-2003.github.io/inside-jvm
+**Live demo:** https://saurabhsds13.github.io/inside-jvm
 
 ---
 
@@ -126,7 +126,7 @@ inside-jvm/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/Saurabh-2003/inside-jvm.git
+git clone https://github.com/Saurabhsds13/inside-jvm.git
 cd inside-jvm
 
 # 2. Install dependencies

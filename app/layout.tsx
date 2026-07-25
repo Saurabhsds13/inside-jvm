@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://saurabh-2003.github.io/inside-jvm',
+    url: 'https://saurabhsds13.github.io/inside-jvm',
     title: 'InsideJVM — Interactive JVM Learning Platform',
     description:
       'Visualize how the Java Virtual Machine works with live animations and interactive simulations.',
