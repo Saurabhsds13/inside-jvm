@@ -1,4 +1,4 @@
-#InsideJVM
+# InsideJVM
 
 Explore the Java Virtual Machine through interactive visualizations,
 animations, and real-world simulations.
