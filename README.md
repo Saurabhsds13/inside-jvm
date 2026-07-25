@@ -1,2 +1,6 @@
-# inside-jvm
-An interactive visual platform to explore JVM internals, memory management, class loading, garbage collection, threading, and Java execution flow.
+#InsideJVM
+
+Explore the Java Virtual Machine through interactive visualizations,
+animations, and real-world simulations.
+
+Learn how Java actually works under the hood.
