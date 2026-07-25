@@ -30,12 +30,6 @@
 ### 🗑️ Garbage Collection
 ![Garbage Collection](./docs/screenshots/gc.png)
 
-### 🗂️ Heap vs Stack
-![Heap vs Stack](./docs/screenshots/heap-stack.png)
-
-### 💬 Interview Q&A
-![Interview](./docs/screenshots/interview.png)
-
 ---
 
 ## Features
