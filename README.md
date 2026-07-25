@@ -19,22 +19,22 @@
 
 [![InsideJVM](https://github-readme-stats.vercel.app/api/pin/?username=Saurabhsds13&repo=inside-jvm&theme=dark&bg_color=080e1a&border_color=1e293b&title_color=3b82f6&text_color=94a3b8&icon_color=8b5cf6)](https://saurabhsds13.github.io/inside-jvm)
 
-| Page | Live Link |
-|------|-----------|
-| 🏠 Home | [saurabhsds13.github.io/inside-jvm](https://saurabhsds13.github.io/inside-jvm) |
-| ⚙️ JVM Architecture | [/architecture](https://saurabhsds13.github.io/inside-jvm/architecture) |
-| 🗂️ Heap vs Stack | [/heap-stack](https://saurabhsds13.github.io/inside-jvm/heap-stack) |
-| 📦 Class Loader | [/class-loader](https://saurabhsds13.github.io/inside-jvm/class-loader) |
-| ⚡ Execution Engine | [/execution-engine](https://saurabhsds13.github.io/inside-jvm/execution-engine) |
-| 🗑️ Garbage Collection | [/garbage-collection](https://saurabhsds13.github.io/inside-jvm/garbage-collection) |
-| 🧵 Threads | [/threads](https://saurabhsds13.github.io/inside-jvm/threads) |
-| 🛡️ Java Memory Model | [/memory-model](https://saurabhsds13.github.io/inside-jvm/memory-model) |
-| 💬 Interview Q&A | [/interview](https://saurabhsds13.github.io/inside-jvm/interview) |
-| ℹ️ About | [/about](https://saurabhsds13.github.io/inside-jvm/about) |
-
-> To add real screenshots: take a browser screenshot of each page and save to `docs/screenshots/` then reference them with `![alt](./docs/screenshots/page.png)`.
-
 </div>
+
+### 🏠 Home
+![InsideJVM Home](./docs/screenshots/home.png)
+
+### ⚙️ JVM Architecture
+![JVM Architecture](./docs/screenshots/architecture.png)
+
+### 🗑️ Garbage Collection
+![Garbage Collection](./docs/screenshots/gc.png)
+
+### 🗂️ Heap vs Stack
+![Heap vs Stack](./docs/screenshots/heap-stack.png)
+
+### 💬 Interview Q&A
+![Interview](./docs/screenshots/interview.png)
 
 ---
 
