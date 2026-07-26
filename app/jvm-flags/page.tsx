@@ -18,7 +18,6 @@ import GlassCard from "@/components/ui/GlassCard";
 import PageHeader from "@/components/layout/PageHeader";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 import StatBar from "@/components/ui/StatBar";
-import { Metadata } from "next";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -409,37 +408,37 @@ export default function JVMFlagsPage() {
     setTimeout(() => setCopied(false), 1800);
   };
   return (
-    <div className="pb-24">
+    <div className="min-h-screen">
       <PageHeader
         badge="Performance Tuning"
         title="Interactive"
         titleHighlight="JVM Flags Lab"
         description="Experiment with production JVM flags, understand their impact and generate optimized startup commands."
         icon={SlidersHorizontal}
-        iconColor="text-cyan-400"
+        iconColor="#06B6D4"
         gradient="from-cyan-500 via-blue-500 to-purple-500"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 space-y-10">
         <AnimatedSection>
-          <GlassCard>
+          <GlassCard className="p-6">
             <div className="grid lg:grid-cols-3 gap-8">
               <div>
-                <div className="text-sm uppercase tracking-widest text-cyan-400 mb-2">
+                <div className="text-xs font-semibold uppercase tracking-widest text-cyan-400 mb-2">
                   JVM Flags
                 </div>
 
-                <h2 className="text-3xl font-bold text-white">
+                <h2 className="text-xl font-bold text-white">
                   Build Production Ready JVM Commands
                 </h2>
 
-                <p className="mt-4 text-slate-300 leading-relaxed">
+                <p className="mt-3 text-sm text-slate-400 leading-relaxed">
                   Adjust memory, GC, JIT and debugging flags while instantly
                   generating the JVM startup command.
                 </p>
               </div>
 
-              <div className="lg:col-span-2">
+              <div className="lg:col-span-2 space-y-4">
                 <StatBar label="Available Flags" value={100} color="#06b6d4" />
 
                 <StatBar
@@ -453,119 +452,116 @@ export default function JVMFlagsPage() {
             </div>
           </GlassCard>
         </AnimatedSection>
-      </div>
       {/* Search & Categories */}
+        <AnimatedSection delay={0.1}>
+          <GlassCard className="p-5">
+            <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
+              <div className="relative flex-1">
+                <input
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search JVM flags..."
+                  className="w-full rounded-xl bg-black/30 border border-white/[0.08] px-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500/40 transition-colors"
+                />
+              </div>
 
-      <AnimatedSection delay={0.15}>
-        <GlassCard>
-          <div className="flex flex-col lg:flex-row gap-6 lg:items-center lg:justify-between">
-            <div className="relative flex-1">
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search JVM flags..."
-                className="w-full rounded-xl bg-slate-900/60 border border-slate-700 px-5 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-              />
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setSelectedCategory("all")}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all border"
+                  style={{
+                    borderColor: selectedCategory === "all" ? '#06B6D440' : 'rgba(255,255,255,0.08)',
+                    backgroundColor: selectedCategory === "all" ? '#06B6D418' : 'rgba(255,255,255,0.02)',
+                    color: selectedCategory === "all" ? '#06B6D4' : '#94a3b8',
+                  }}
+                >
+                  All
+                </button>
+
+                {Object.entries(CATEGORY_META).map(([key, meta]) => {
+                  const Icon = meta.icon;
+                  return (
+                    <button
+                      key={key}
+                      onClick={() => setSelectedCategory(key as keyof typeof CATEGORY_META)}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all border"
+                      style={{
+                        borderColor: selectedCategory === key ? `${meta.color}40` : 'rgba(255,255,255,0.08)',
+                        backgroundColor: selectedCategory === key ? `${meta.color}18` : 'rgba(255,255,255,0.02)',
+                        color: selectedCategory === key ? meta.color : '#94a3b8',
+                      }}
+                    >
+                      <Icon size={12} />
+                      {meta.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
+          </GlassCard>
+        </AnimatedSection>
 
-            <div className="flex flex-wrap gap-3">
-              <button
-                onClick={() => setSelectedCategory("all")}
-                className={`px-4 py-2 rounded-lg transition ${
-                  selectedCategory === "all"
-                    ? "bg-cyan-500 text-white"
-                    : "bg-slate-800 hover:bg-slate-700 text-slate-300"
-                }`}
-              >
-                All
-              </button>
-
-              {Object.entries(CATEGORY_META).map(([key, meta]) => {
+        {/* Flag Explorer */}
+        <AnimatedSection delay={0.2}>
+          <div className="space-y-4">
+            <AnimatePresence>
+              {filteredFlags.map((flag) => {
+                const meta = CATEGORY_META[flag.category];
                 const Icon = meta.icon;
 
                 return (
-                  <button
-                    key={key}
-                    onClick={() =>
-                      setSelectedCategory(key as keyof typeof CATEGORY_META)
-                    }
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg transition ${
-                      selectedCategory === key
-                        ? "bg-cyan-500 text-white"
-                        : "bg-slate-800 hover:bg-slate-700 text-slate-300"
-                    }`}
+                  <motion.div
+                    key={flag.id}
+                    layout
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25 }}
                   >
-                    <Icon size={16} />
-                    {meta.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </GlassCard>
-      </AnimatedSection>
-
-      {/* Flag Explorer */}
-
-      <AnimatedSection delay={0.25}>
-        <div className="space-y-6">
-          <AnimatePresence>
-            {filteredFlags.map((flag) => {
-              const meta = CATEGORY_META[flag.category];
-              const Icon = meta.icon;
-
-              return (
-                <motion.div
-                  key={flag.id}
-                  layout
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.25 }}
-                >
-                  <GlassCard>
-                    <div className="flex items-start justify-between gap-6">
-                      <div className="flex gap-4">
-                        <div
-                          className="w-12 h-12 rounded-xl flex items-center justify-center"
-                          style={{
-                            background: `${meta.color}20`,
-                            color: meta.color,
-                          }}
-                        >
-                          <Icon size={22} />
-                        </div>
-
-                        <div>
-                          <div className="flex items-center gap-3 flex-wrap">
-                            <h3 className="text-xl font-semibold text-white">
-                              {flag.name}
-                            </h3>
-
-                            <span className="px-2 py-1 rounded bg-slate-800 text-cyan-300 text-xs">
-                              {flag.flag || "Selector"}
-                            </span>
+                    <GlassCard className="p-5">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex gap-3">
+                          <div
+                            className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                            style={{
+                              background: `${meta.color}20`,
+                              color: meta.color,
+                            }}
+                          >
+                            <Icon size={18} />
                           </div>
 
-                          <p className="text-slate-400 mt-2">
-                            {flag.description}
-                          </p>
-                        </div>
-                      </div>
+                          <div>
+                            <div className="flex items-center gap-2.5 flex-wrap">
+                              <h3 className="text-sm font-bold text-white">
+                                {flag.name}
+                              </h3>
 
-                      <button
-                        onClick={() =>
-                          setExpanded(expanded === flag.id ? null : flag.id)
-                        }
-                        className="text-slate-400 hover:text-white"
-                      >
-                        {expanded === flag.id ? (
-                          <ChevronDown />
-                        ) : (
-                          <ChevronRight />
-                        )}
-                      </button>
-                    </div>
+                              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono border"
+                                style={{ borderColor: `${meta.color}40`, color: meta.color, backgroundColor: `${meta.color}15` }}>
+                                {flag.flag || "Selector"}
+                              </span>
+                            </div>
+
+                            <p className="text-xs text-slate-500 mt-1.5">
+                              {flag.description}
+                            </p>
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() =>
+                            setExpanded(expanded === flag.id ? null : flag.id)
+                          }
+                          className="text-slate-500 hover:text-white transition-colors"
+                        >
+                          {expanded === flag.id ? (
+                            <ChevronDown className="w-4 h-4" />
+                          ) : (
+                            <ChevronRight className="w-4 h-4" />
+                          )}
+                        </button>
+                      </div>
                     <AnimatePresence>
                       {expanded === flag.id && (
                         <motion.div
@@ -574,34 +570,26 @@ export default function JVMFlagsPage() {
                           exit={{ height: 0, opacity: 0 }}
                           className="overflow-hidden"
                         >
-                          <div className="mt-8 grid lg:grid-cols-2 gap-8">
+                          <div className="mt-5 pt-5 border-t border-white/[0.06] grid lg:grid-cols-2 gap-5">
                             {/* Controls */}
-
-                            <GlassCard className="bg-slate-900/40">
-                              <h4 className="text-lg font-semibold text-white mb-5">
+                            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+                              <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">
                                 Configure Flag
                               </h4>
 
                               {flag.type === "boolean" && (
                                 <label className="flex items-center justify-between">
-                                  <span className="text-slate-300">Enable</span>
-
+                                  <span className="text-xs text-slate-400">Enable</span>
                                   <button
-                                    onClick={() =>
-                                      updateFlag(flag.id, !flag.value)
-                                    }
-                                    className={`w-14 h-8 rounded-full transition relative ${
-                                      flag.value
-                                        ? "bg-emerald-500"
-                                        : "bg-slate-700"
+                                    onClick={() => updateFlag(flag.id, !flag.value)}
+                                    className={`w-12 h-6 rounded-full transition relative ${
+                                      flag.value ? "bg-emerald-500/60" : "bg-white/[0.08]"
                                     }`}
                                   >
                                     <motion.div
                                       layout
-                                      className="absolute top-1 left-1 w-6 h-6 rounded-full bg-white"
-                                      animate={{
-                                        x: flag.value ? 24 : 0,
-                                      }}
+                                      className="absolute top-1 left-1 w-4 h-4 rounded-full bg-white"
+                                      animate={{ x: flag.value ? 24 : 0 }}
                                     />
                                   </button>
                                 </label>
@@ -610,25 +598,18 @@ export default function JVMFlagsPage() {
                               {flag.type === "select" && (
                                 <select
                                   value={String(flag.value)}
-                                  onChange={(e) =>
-                                    updateFlag(flag.id, e.target.value)
-                                  }
-                                  className="w-full rounded-lg bg-slate-800 border border-slate-700 p-3 text-white"
+                                  onChange={(e) => updateFlag(flag.id, e.target.value)}
+                                  className="w-full rounded-lg bg-black/30 border border-white/[0.08] p-2.5 text-sm text-white"
                                 >
                                   {flag.options?.map((option) => (
-                                    <option
-                                      key={option.value}
-                                      value={option.value}
-                                    >
+                                    <option key={option.value} value={option.value}>
                                       {option.label}
                                     </option>
                                   ))}
                                 </select>
                               )}
 
-                              {(flag.type === "size" ||
-                                flag.type === "number" ||
-                                flag.type === "percent") && (
+                              {(flag.type === "size" || flag.type === "number" || flag.type === "percent") && (
                                 <>
                                   <input
                                     type="range"
@@ -636,86 +617,47 @@ export default function JVMFlagsPage() {
                                     max={flag.max}
                                     step={flag.step}
                                     value={Number(flag.value)}
-                                    onChange={(e) =>
-                                      updateFlag(
-                                        flag.id,
-                                        Number(e.target.value),
-                                      )
-                                    }
-                                    className="w-full"
+                                    onChange={(e) => updateFlag(flag.id, Number(e.target.value))}
+                                    className="w-full accent-cyan-500"
                                   />
-
-                                  <div className="flex justify-between mt-3">
-                                    <span className="text-slate-400">
-                                      {flag.min}
-
-                                      {flag.unit}
-                                    </span>
-
-                                    <span className="text-cyan-400 font-semibold">
-                                      {flag.value}
-
-                                      {flag.unit}
-                                    </span>
-
-                                    <span className="text-slate-400">
-                                      {flag.max}
-
-                                      {flag.unit}
-                                    </span>
+                                  <div className="flex justify-between mt-2 text-[10px]">
+                                    <span className="text-slate-600">{flag.min}{flag.unit}</span>
+                                    <span className="text-cyan-400 font-mono font-bold">{flag.value}{flag.unit}</span>
+                                    <span className="text-slate-600">{flag.max}{flag.unit}</span>
                                   </div>
                                 </>
                               )}
-                            </GlassCard>
+                            </div>
 
-                            {/* Performance */}
-
-                            <GlassCard className="bg-slate-900/40">
-                              <h4 className="text-lg font-semibold text-white mb-5">
+                            {/* Performance Impact */}
+                            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+                              <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">
                                 Performance Impact
                               </h4>
 
-                              {Object.entries(flag.impact).map(
-                                ([key, value]) => (
-                                  <div key={key} className="mb-5">
-                                    <div className="flex justify-between text-sm mb-2">
-                                      <span className="capitalize text-slate-300">
-                                        {key}
-                                      </span>
-
-                                      <span className="text-white">
-                                        {value > 0 ? "+" : ""}
-
-                                        {value}
-                                      </span>
+                              <div className="space-y-3">
+                                {Object.entries(flag.impact).map(([key, value]) => (
+                                  <div key={key}>
+                                    <div className="flex justify-between text-[10px] mb-1">
+                                      <span className="capitalize text-slate-400">{key}</span>
+                                      <span className="text-slate-300 font-mono">{value > 0 ? "+" : ""}{value}</span>
                                     </div>
-
-                                    <div className="h-2 rounded-full bg-slate-800 overflow-hidden">
+                                    <div className="h-1.5 rounded-full bg-white/[0.05] overflow-hidden">
                                       <motion.div
                                         initial={{ width: 0 }}
-                                        animate={{
-                                          width: `${Math.min(
-                                            Math.abs(value) * 2,
-                                            100,
-                                          )}%`,
-                                        }}
-                                        className={`h-full ${getImpactColor(value)}`}
+                                        animate={{ width: `${Math.min(Math.abs(value) * 2, 100)}%` }}
+                                        className={`h-full rounded-full ${getImpactColor(value)}`}
                                       />
                                     </div>
                                   </div>
-                                ),
-                              )}
-
-                              <div className="mt-6 rounded-lg bg-slate-800/70 p-4">
-                                <div className="text-xs uppercase tracking-widest text-cyan-400 mb-2">
-                                  Recommendation
-                                </div>
-
-                                <p className="text-slate-300 leading-7">
-                                  {flag.detail}
-                                </p>
+                                ))}
                               </div>
-                            </GlassCard>
+
+                              <div className="mt-4 pt-3 border-t border-white/[0.06]">
+                                <span className="text-[10px] font-semibold text-cyan-400 uppercase tracking-wider">Recommendation</span>
+                                <p className="text-xs text-slate-400 leading-relaxed mt-1.5">{flag.detail}</p>
+                              </div>
+                            </div>
                           </div>
                         </motion.div>
                       )}
@@ -728,340 +670,238 @@ export default function JVMFlagsPage() {
         </div>
       </AnimatedSection>
 
-      {/* ====================================================================== */}
       {/* JVM Command Builder */}
-      {/* ====================================================================== */}
-
-      <AnimatedSection delay={0.35}>
-        <GlassCard>
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
-            <div>
-              <div className="text-sm uppercase tracking-widest text-cyan-400">
-                Generated Command
+        <AnimatedSection delay={0.3}>
+          <GlassCard className="p-6">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-5">
+              <div>
+                <span className="text-[10px] font-semibold uppercase tracking-widest text-cyan-400">Generated Command</span>
+                <h2 className="text-lg font-bold text-white mt-1">Production JVM Launcher</h2>
+                <p className="text-xs text-slate-500 mt-1">Every flag you modify instantly updates the startup command below.</p>
               </div>
 
-              <h2 className="text-3xl font-bold text-white mt-2">
-                Production JVM Launcher
-              </h2>
-
-              <p className="text-slate-400 mt-3">
-                Every flag you modify instantly updates the startup command
-                below.
-              </p>
-            </div>
-
-            <div className="flex gap-3">
-              <button
-                onClick={() => {
-                  setFlags(structuredClone(INITIAL_FLAGS));
-                }}
-                className="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 transition"
-              >
-                Reset
-              </button>
-
-              <button
-                onClick={copyCommand}
-                className="px-5 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 transition flex items-center gap-2"
-              >
-                {copied ? <Check size={18} /> : <Copy size={18} />}
-
-                {copied ? "Copied" : "Copy"}
-              </button>
-            </div>
-          </div>
-
-          <div className="rounded-2xl overflow-hidden border border-slate-700">
-            <div className="bg-slate-900 px-5 py-3 flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-red-500" />
-
-              <div className="w-3 h-3 rounded-full bg-yellow-500" />
-
-              <div className="w-3 h-3 rounded-full bg-green-500" />
-
-              <span className="ml-4 text-slate-400 text-sm">Terminal</span>
-            </div>
-
-            <div className="bg-[#0d1117] p-6">
-              <pre className="overflow-x-auto">
-                <code className="text-green-400 text-sm leading-8">
-                  {command}
-                </code>
-              </pre>
-            </div>
-          </div>
-        </GlassCard>
-      </AnimatedSection>
-
-      <AnimatedSection delay={0.45}>
-        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
-          {[
-            {
-              title: "Spring Boot API",
-              heap: 2048,
-              gc: "-XX:+UseG1GC",
-            },
-            {
-              title: "Kafka",
-              heap: 8192,
-              gc: "-XX:+UseG1GC",
-            },
-            {
-              title: "Local Development",
-              heap: 512,
-              gc: "-XX:+UseG1GC",
-            },
-            {
-              title: "Low Memory",
-              heap: 256,
-              gc: "-XX:+UseSerialGC",
-            },
-          ].map((profile) => (
-            <GlassCard key={profile.title} hover>
-              <div className="flex flex-col h-full">
-                <h3 className="text-xl font-semibold text-white">
-                  {profile.title}
-                </h3>
-
-                <p className="mt-3 text-slate-400 text-sm leading-7">
-                  Recommended production configuration.
-                </p>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => { setFlags(structuredClone(INITIAL_FLAGS)); }}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs border border-white/[0.08] text-slate-400 hover:text-white transition-all"
+                >
+                  Reset
+                </button>
 
                 <button
-                  className="mt-8 w-full rounded-lg bg-cyan-500 hover:bg-cyan-400 py-3 transition"
-                  onClick={() => {
-                    setFlags((prev) =>
-                      prev.map((flag) => {
-                        if (flag.id === "xmx")
-                          return {
-                            ...flag,
-                            value: profile.heap,
-                          };
-
-                        if (flag.id === "xms")
-                          return {
-                            ...flag,
-                            value: profile.heap,
-                          };
-
-                        if (flag.id === "gc")
-                          return {
-                            ...flag,
-                            value: profile.gc,
-                          };
-
-                        return flag;
-                      }),
-                    );
-                  }}
+                  onClick={copyCommand}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium bg-cyan-500/20 border border-cyan-500/40 text-cyan-400 hover:bg-cyan-500/30 transition-all"
                 >
-                  Apply Preset
+                  {copied ? <Check size={14} /> : <Copy size={14} />}
+                  {copied ? "Copied" : "Copy"}
                 </button>
               </div>
-            </GlassCard>
-          ))}
-        </div>
-      </AnimatedSection>
-
-      <AnimatedSection delay={0.5}>
-        <GlassCard>
-          <h2 className="text-3xl font-bold text-white mb-8">
-            Production Recommendations
-          </h2>
-
-          <div className="grid lg:grid-cols-2 gap-8">
-            {[
-              "Always keep -Xms equal to -Xmx in production servers.",
-              "Enable HeapDumpOnOutOfMemoryError.",
-              "Always enable GC logging.",
-              "Use G1GC unless latency requirements demand ZGC.",
-              "Monitor GC using JFR or Mission Control.",
-              "Avoid experimental JVM flags in production.",
-            ].map((tip) => (
-              <div key={tip} className="flex gap-4 items-start">
-                <div className="mt-1">
-                  <Check size={18} className="text-emerald-400" />
-                </div>
-
-                <p className="text-slate-300 leading-7">{tip}</p>
-              </div>
-            ))}
-          </div>
-        </GlassCard>
-      </AnimatedSection>
-
-      <AnimatedSection delay={0.6}>
-        <GlassCard>
-          <div className="mb-8">
-            <div className="text-sm uppercase tracking-widest text-cyan-400">
-              Interview Corner
             </div>
 
-            <h2 className="text-3xl font-bold text-white mt-2">
-              Frequently Asked JVM Flag Questions
-            </h2>
-          </div>
-
-          {[
-            {
-              q: "Why should Xms and Xmx be equal in production?",
-              a: "Keeping the initial heap equal to the maximum heap prevents runtime heap expansion. Heap expansion causes additional GC pauses and memory commits. Fixed heap sizing produces more predictable latency.",
-            },
-            {
-              q: "When should you use ZGC instead of G1?",
-              a: "Choose ZGC when extremely low pause times are more important than maximum throughput. It is commonly used for financial systems, gaming servers, and real-time APIs.",
-            },
-            {
-              q: "Why enable HeapDumpOnOutOfMemoryError?",
-              a: "It automatically captures the heap before the JVM exits, allowing memory leak analysis with Eclipse MAT or JDK Mission Control.",
-            },
-            {
-              q: "Why is GC logging always recommended?",
-              a: "GC logs provide visibility into pause times, allocation rate, promotion failures and Full GCs. They are the first source used when diagnosing JVM performance issues.",
-            },
-          ].map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="border-b border-slate-800 last:border-none py-6"
-            >
-              <div className="font-semibold text-white text-lg">{item.q}</div>
-
-              <p className="text-slate-400 mt-3 leading-8">{item.a}</p>
-            </motion.div>
-          ))}
-        </GlassCard>
-      </AnimatedSection>
-
-      <AnimatedSection delay={0.7}>
-        <div className="grid lg:grid-cols-2 gap-6">
-          {[
-            {
-              title: "Huge Heap on Small Server",
-              desc: "Setting -Xmx equal to the entire machine memory leaves no room for Metaspace, thread stacks, direct buffers or the operating system.",
-            },
-            {
-              title: "Disabling GC Logs",
-              desc: "Without GC logs you lose the most valuable source of production troubleshooting information.",
-            },
-            {
-              title: "Using Experimental Flags",
-              desc: "Avoid experimental JVM options unless you completely understand their behavior.",
-            },
-            {
-              title: "Ignoring Container Memory",
-              desc: "Modern applications should use container-aware JVM settings instead of assuming host memory.",
-            },
-          ].map((card) => (
-            <GlassCard key={card.title} hover>
-              <div className="flex gap-4">
-                <div>
-                  <Info className="text-amber-400" size={24} />
+            <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-[#0a0f1e]">
+              <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/[0.06] bg-white/[0.02]">
+                <div className="flex gap-1.5">
+                  <span className="w-3 h-3 rounded-full bg-red-500/60" />
+                  <span className="w-3 h-3 rounded-full bg-yellow-500/60" />
+                  <span className="w-3 h-3 rounded-full bg-green-500/60" />
                 </div>
-
-                <div>
-                  <h3 className="font-semibold text-xl text-white">
-                    {card.title}
-                  </h3>
-
-                  <p className="text-slate-400 mt-3 leading-7">{card.desc}</p>
-                </div>
+                <span className="ml-3 text-xs text-slate-500 font-mono">Terminal</span>
               </div>
-            </GlassCard>
-          ))}
-        </div>
-      </AnimatedSection>
+              <div className="p-4 overflow-x-auto">
+                <pre>
+                  <code className="text-green-400 text-sm font-mono leading-relaxed">{command}</code>
+                </pre>
+              </div>
+            </div>
+          </GlassCard>
+        </AnimatedSection>
 
-      <AnimatedSection delay={0.8}>
-        <GlassCard>
-          <h2 className="text-3xl font-bold text-white mb-8">
-            JVM Version Compatibility
-          </h2>
-
-          <div className="grid md:grid-cols-4 gap-6">
+        <AnimatedSection delay={0.35}>
+          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
             {[
-              {
-                version: "Java 8",
-                items: ["Parallel GC", "CMS", "G1"],
-              },
-              {
-                version: "Java 11",
-                items: ["Container Support", "G1 Default", "JFR"],
-              },
-              {
-                version: "Java 17",
-                items: ["ZGC Stable", "Strong Encapsulation", "Modern GC"],
-              },
-              {
-                version: "Java 21",
-                items: ["Generational ZGC", "Virtual Threads", "Latest LTS"],
-              },
-            ].map((v) => (
-              <div
-                key={v.version}
-                className="rounded-xl bg-slate-900/50 border border-slate-700 p-5"
-              >
-                <div className="font-bold text-cyan-400 text-xl mb-5">
-                  {v.version}
+              { title: "Spring Boot API", heap: 2048, gc: "-XX:+UseG1GC" },
+              { title: "Kafka", heap: 8192, gc: "-XX:+UseG1GC" },
+              { title: "Local Development", heap: 512, gc: "-XX:+UseG1GC" },
+              { title: "Low Memory", heap: 256, gc: "-XX:+UseSerialGC" },
+            ].map((profile) => (
+              <GlassCard key={profile.title} className="p-5" hover>
+                <div className="flex flex-col h-full">
+                  <h3 className="text-sm font-bold text-white">{profile.title}</h3>
+                  <p className="mt-2 text-xs text-slate-500 leading-relaxed">
+                    Heap: {profile.heap}MB • {profile.gc.replace('-XX:+Use', '').replace('GC', ' GC')}
+                  </p>
+                  <button
+                    className="mt-4 w-full px-3 py-1.5 rounded-lg text-xs font-medium bg-cyan-500/20 border border-cyan-500/40 text-cyan-400 hover:bg-cyan-500/30 transition-all"
+                    onClick={() => {
+                      setFlags((prev) =>
+                        prev.map((flag) => {
+                          if (flag.id === "xmx") return { ...flag, value: profile.heap };
+                          if (flag.id === "xms") return { ...flag, value: profile.heap };
+                          if (flag.id === "gc") return { ...flag, value: profile.gc };
+                          return flag;
+                        }),
+                      );
+                    }}
+                  >
+                    Apply Preset
+                  </button>
                 </div>
-
-                <div className="space-y-3">
-                  {v.items.map((i) => (
-                    <div key={i} className="flex gap-3 items-center">
-                      <Check size={16} className="text-emerald-400" />
-
-                      <span className="text-slate-300">{i}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              </GlassCard>
             ))}
           </div>
-        </GlassCard>
-      </AnimatedSection>
+        </AnimatedSection>
 
-      <AnimatedSection delay={0.9}>
-        <GlassCard>
-          <div className="text-center">
-            <div className="text-5xl mb-6">⚙️</div>
+        <AnimatedSection delay={0.4}>
+          <GlassCard className="p-6">
+            <h2 className="text-lg font-bold text-white mb-5">Production Recommendations</h2>
+            <div className="grid lg:grid-cols-2 gap-3">
+              {[
+                "Always keep -Xms equal to -Xmx in production servers.",
+                "Enable HeapDumpOnOutOfMemoryError.",
+                "Always enable GC logging.",
+                "Use G1GC unless latency requirements demand ZGC.",
+                "Monitor GC using JFR or Mission Control.",
+                "Avoid experimental JVM flags in production.",
+              ].map((tip) => (
+                <div key={tip} className="flex gap-3 items-start p-3 rounded-xl border border-white/[0.04] bg-white/[0.02]">
+                  <Check size={14} className="text-emerald-400 shrink-0 mt-0.5" />
+                  <p className="text-xs text-slate-400 leading-relaxed">{tip}</p>
+                </div>
+              ))}
+            </div>
+          </GlassCard>
+        </AnimatedSection>
 
-            <h2 className="text-4xl font-bold text-white">
-              Master JVM Performance
-            </h2>
+        <AnimatedSection delay={0.45}>
+          <GlassCard className="p-6">
+            <div className="mb-5">
+              <span className="text-[10px] font-semibold uppercase tracking-widest text-cyan-400">Interview Corner</span>
+              <h2 className="text-lg font-bold text-white mt-1">Frequently Asked JVM Flag Questions</h2>
+            </div>
 
-            <p className="mt-6 max-w-3xl mx-auto text-slate-400 leading-8">
-              JVM tuning is about understanding trade-offs rather than
-              memorizing flags. Learn the purpose behind each option, monitor
-              your application with JFR and GC logs, and validate every change
+            {[
+              {
+                q: "Why should Xms and Xmx be equal in production?",
+                a: "Keeping the initial heap equal to the maximum heap prevents runtime heap expansion. Heap expansion causes additional GC pauses and memory commits. Fixed heap sizing produces more predictable latency.",
+              },
+              {
+                q: "When should you use ZGC instead of G1?",
+                a: "Choose ZGC when extremely low pause times are more important than maximum throughput. It is commonly used for financial systems, gaming servers, and real-time APIs.",
+              },
+              {
+                q: "Why enable HeapDumpOnOutOfMemoryError?",
+                a: "It automatically captures the heap before the JVM exits, allowing memory leak analysis with Eclipse MAT or JDK Mission Control.",
+              },
+              {
+                q: "Why is GC logging always recommended?",
+                a: "GC logs provide visibility into pause times, allocation rate, promotion failures and Full GCs. They are the first source used when diagnosing JVM performance issues.",
+              },
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className="border-b border-white/[0.06] last:border-none py-4"
+              >
+                <div className="text-sm font-bold text-white">{item.q}</div>
+                <p className="text-xs text-slate-400 mt-2 leading-relaxed">{item.a}</p>
+              </motion.div>
+            ))}
+          </GlassCard>
+        </AnimatedSection>
+
+        <AnimatedSection delay={0.5}>
+          <div className="grid lg:grid-cols-2 gap-4">
+            {[
+              {
+                title: "Huge Heap on Small Server",
+                desc: "Setting -Xmx equal to the entire machine memory leaves no room for Metaspace, thread stacks, direct buffers or the operating system.",
+              },
+              {
+                title: "Disabling GC Logs",
+                desc: "Without GC logs you lose the most valuable source of production troubleshooting information.",
+              },
+              {
+                title: "Using Experimental Flags",
+                desc: "Avoid experimental JVM options unless you completely understand their behavior.",
+              },
+              {
+                title: "Ignoring Container Memory",
+                desc: "Modern applications should use container-aware JVM settings instead of assuming host memory.",
+              },
+            ].map((card) => (
+              <GlassCard key={card.title} className="p-5" hover>
+                <div className="flex gap-3">
+                  <Info className="text-amber-400 shrink-0 mt-0.5" size={16} />
+                  <div>
+                    <h3 className="text-sm font-bold text-white">{card.title}</h3>
+                    <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">{card.desc}</p>
+                  </div>
+                </div>
+              </GlassCard>
+            ))}
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection delay={0.55}>
+          <GlassCard className="p-6">
+            <h2 className="text-lg font-bold text-white mb-5">JVM Version Compatibility</h2>
+            <div className="grid md:grid-cols-4 gap-4">
+              {[
+                { version: "Java 8", items: ["Parallel GC", "CMS", "G1"], color: '#EF4444' },
+                { version: "Java 11", items: ["Container Support", "G1 Default", "JFR"], color: '#F59E0B' },
+                { version: "Java 17", items: ["ZGC Stable", "Strong Encapsulation", "Modern GC"], color: '#10B981' },
+                { version: "Java 21", items: ["Generational ZGC", "Virtual Threads", "Latest LTS"], color: '#06B6D4' },
+              ].map((v) => (
+                <div
+                  key={v.version}
+                  className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4"
+                >
+                  <div className="text-sm font-bold mb-3" style={{ color: v.color }}>{v.version}</div>
+                  <div className="space-y-2">
+                    {v.items.map((i) => (
+                      <div key={i} className="flex gap-2 items-center">
+                        <Check size={12} className="text-emerald-400 shrink-0" />
+                        <span className="text-xs text-slate-400">{i}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </GlassCard>
+        </AnimatedSection>
+
+        <AnimatedSection delay={0.6}>
+          <GlassCard className="p-6 text-center">
+            <h2 className="text-lg font-bold text-white">Master JVM Performance</h2>
+            <p className="mt-3 max-w-2xl mx-auto text-xs text-slate-400 leading-relaxed">
+              JVM tuning is about understanding trade-offs rather than memorizing flags. Learn the purpose
+              behind each option, monitor your application with JFR and GC logs, and validate every change
               with benchmarks before deploying to production.
             </p>
-
-            <div className="mt-10 flex flex-wrap justify-center gap-4">
-              <span className="px-4 py-2 rounded-full bg-cyan-500/20 text-cyan-300">
-                Heap
-              </span>
-
-              <span className="px-4 py-2 rounded-full bg-purple-500/20 text-purple-300">
-                Garbage Collection
-              </span>
-
-              <span className="px-4 py-2 rounded-full bg-emerald-500/20 text-emerald-300">
-                JIT
-              </span>
-
-              <span className="px-4 py-2 rounded-full bg-orange-500/20 text-orange-300">
-                Performance
-              </span>
-
-              <span className="px-4 py-2 rounded-full bg-pink-500/20 text-pink-300">
-                Production
-              </span>
+            <div className="mt-5 flex flex-wrap justify-center gap-2">
+              {[
+                { label: 'Heap', color: '#06B6D4' },
+                { label: 'Garbage Collection', color: '#8B5CF6' },
+                { label: 'JIT', color: '#10B981' },
+                { label: 'Performance', color: '#F59E0B' },
+                { label: 'Production', color: '#EC4899' },
+              ].map((tag) => (
+                <span
+                  key={tag.label}
+                  className="px-2.5 py-1 rounded-full text-xs font-medium"
+                  style={{ backgroundColor: `${tag.color}20`, color: tag.color }}
+                >
+                  {tag.label}
+                </span>
+              ))}
             </div>
-          </div>
-        </GlassCard>
-      </AnimatedSection>
+          </GlassCard>
+        </AnimatedSection>
+
+      </div>
     </div>
   );
 }
