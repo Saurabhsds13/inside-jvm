@@ -175,7 +175,10 @@ export type QuestionCategory =
   | 'Threads'
   | 'Performance'
   | 'JIT'
-  | 'Java Memory Model';
+  | 'Java Memory Model'
+  | 'Virtual Threads'
+  | 'Profiling'
+  | 'JVM Internals';
 
 export interface InterviewQuestion {
   id: string;
