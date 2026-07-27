@@ -31,28 +31,54 @@ export default function CodeBlock({
 
   // Simple Java syntax highlighting
   const highlightJava = (line: string): string => {
-    return line
+    // Tokenize approach: split line into segments, highlight each
+    // This avoids regex replacements interfering with each other
+
+    const escaped = line
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      // Keywords
-      .replace(
-        /\b(public|private|protected|static|final|void|class|interface|extends|implements|new|return|if|else|for|while|do|try|catch|finally|throw|throws|import|package|this|super|null|true|false|instanceof|synchronized|volatile|abstract|native|transient|enum|record|sealed|permits)\b/g,
-        '<span class="text-purple-400">$1</span>'
-      )
-      // Types
-      .replace(
-        /\b(int|long|double|float|boolean|byte|short|char|String|Object|Integer|Long|Double|Boolean|List|Map|Set|Array)\b/g,
-        '<span class="text-cyan-400">$1</span>'
-      )
-      // Annotations
-      .replace(/(@\w+)/g, '<span class="text-yellow-400">$1</span>')
-      // Strings
-      .replace(/(["'])(?:(?=(\\?))\2.)*?\1/g, '<span class="text-green-400">$&</span>')
-      // Comments
-      .replace(/(\/\/.*$)/gm, '<span class="text-slate-500">$1</span>')
-      // Numbers
-      .replace(/\b(\d+)\b/g, '<span class="text-orange-400">$1</span>');
+      .replace(/>/g, '&gt;');
+
+    // Match tokens in priority order, return the highlighted line
+    const tokenRegex = /(\/\/.*$)|(["'])(?:(?=(\\?))\3.)*?\2|(@\w+)|\b(public|private|protected|static|final|void|class|interface|extends|implements|new|return|if|else|for|while|do|try|catch|finally|throw|throws|import|package|this|super|null|true|false|instanceof|synchronized|volatile|abstract|native|transient|enum|record|sealed|permits|var)\b|\b(int|long|double|float|boolean|byte|short|char|String|Object|Integer|Long|Double|Boolean|List|Map|Set|Array|Thread|Future|Executors|Subtask|ReentrantLock|Lock)\b|\b(\d+)\b/gm;
+
+    let result = '';
+    let lastIndex = 0;
+
+    let match: RegExpExecArray | null;
+    while ((match = tokenRegex.exec(escaped)) !== null) {
+      // Add text before this match
+      result += escaped.slice(lastIndex, match.index);
+
+      if (match[1]) {
+        // Comment
+        result += `<span class="text-slate-500">${match[0]}</span>`;
+      } else if (match[2]) {
+        // String (match[2] is the quote char, full match is match[0])
+        result += `<span class="text-green-400">${match[0]}</span>`;
+      } else if (match[4]) {
+        // Annotation
+        result += `<span class="text-yellow-400">${match[0]}</span>`;
+      } else if (match[5]) {
+        // Keyword
+        result += `<span class="text-purple-400">${match[0]}</span>`;
+      } else if (match[6]) {
+        // Type
+        result += `<span class="text-cyan-400">${match[0]}</span>`;
+      } else if (match[7]) {
+        // Number
+        result += `<span class="text-orange-400">${match[0]}</span>`;
+      } else {
+        result += match[0];
+      }
+
+      lastIndex = tokenRegex.lastIndex;
+    }
+
+    // Add remaining text
+    result += escaped.slice(lastIndex);
+
+    return result;
   };
 
   return (
