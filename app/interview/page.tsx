@@ -50,6 +50,7 @@ const CATEGORY_COLORS: Record<QuestionCategory, string> = {
   Architecture: 'blue', Memory: 'purple', 'Class Loading': 'cyan',
   'Garbage Collection': 'orange', Threads: 'pink',
   Performance: 'green', JIT: 'green', 'Java Memory Model': 'red',
+  'Virtual Threads': 'green', Profiling: 'cyan', 'JVM Internals': 'purple',
 };
 const DIFFICULTIES: QuestionDifficulty[] = ['Beginner', 'Intermediate', 'Advanced'];
 const CATEGORIES: QuestionCategory[] = [
