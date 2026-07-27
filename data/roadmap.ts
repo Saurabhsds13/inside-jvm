@@ -101,4 +101,14 @@ export const roadmapItems: RoadmapItem[] = [
     topics: ['M:N Threading', 'Carrier Threads', 'Pinning', 'Structured Concurrency'],
     level: 'Advanced',
   },
+  {
+    id: 11,
+    title: 'Bytecode Playground',
+    description: 'Step through JVM bytecode instruction by instruction with an animated operand stack visualizer.',
+    href: '/bytecode',
+    color: '#F59E0B',
+    icon: 'Code2',
+    topics: ['Operand Stack', 'Local Variables', 'Opcodes', 'Stack Machine'],
+    level: 'Intermediate',
+  },
 ];

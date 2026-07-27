@@ -11,4 +11,5 @@ export const navItems: NavItem[] = [
   { label: 'Interview Q&A', href: '/interview', description: 'Prep questions' },
   { label: 'JVM Flags Lab', href: '/jvm-flags', description: 'Interactive tuning' },
   { label: 'Virtual Threads', href: '/virtual-threads', description: 'Project Loom' },
+  { label: 'Bytecode', href: '/bytecode', description: 'Bytecode playground' },
 ];
