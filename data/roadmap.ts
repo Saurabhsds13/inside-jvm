@@ -2,6 +2,16 @@ import type { RoadmapItem } from '@/types';
 
 export const roadmapItems: RoadmapItem[] = [
   {
+    id: 0,
+    title: 'How Java Runs',
+    description: 'The complete journey from .java source to running output. JVM vs JRE vs JDK explained.',
+    href: '/how-java-runs',
+    color: '#3B82F6',
+    icon: 'Play',
+    topics: ['Source → Bytecode → Execution', 'JVM vs JRE vs JDK', 'Platform Independence', 'Compilation Flow'],
+    level: 'Foundational',
+  },
+  {
     id: 1,
     title: 'JVM Architecture',
     description: 'Understand the high-level structure of the JVM and how its subsystems interact.',
@@ -100,5 +110,25 @@ export const roadmapItems: RoadmapItem[] = [
     icon: 'Workflow',
     topics: ['M:N Threading', 'Carrier Threads', 'Pinning', 'Structured Concurrency'],
     level: 'Advanced',
+  },
+  {
+    id: 11,
+    title: 'Bytecode Playground',
+    description: 'Step through JVM bytecode instruction by instruction with an animated operand stack visualizer.',
+    href: '/bytecode',
+    color: '#F59E0B',
+    icon: 'Code2',
+    topics: ['Operand Stack', 'Local Variables', 'Opcodes', 'Stack Machine'],
+    level: 'Intermediate',
+  },
+  {
+    id: 12,
+    title: 'Profiling & Troubleshooting',
+    description: 'Master jstack, jmap, jstat, jcmd, and JFR. Diagnose memory leaks, deadlocks, and performance issues.',
+    href: '/profiling',
+    color: '#EF4444',
+    icon: 'Activity',
+    topics: ['jstack', 'jmap', 'jstat', 'JFR', 'Heap Dumps', 'Thread Dumps'],
+    level: 'Intermediate',
   },
 ];

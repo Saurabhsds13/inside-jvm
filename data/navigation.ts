@@ -1,6 +1,7 @@
 import type { NavItem } from '@/types';
 
 export const navItems: NavItem[] = [
+  { label: 'How Java Runs', href: '/how-java-runs', description: 'Start here' },
   { label: 'Architecture', href: '/architecture', description: 'JVM component overview' },
   { label: 'Heap vs Stack', href: '/heap-stack', description: 'Memory regions explained' },
   { label: 'Class Loader', href: '/class-loader', description: 'Class loading lifecycle' },
@@ -11,4 +12,6 @@ export const navItems: NavItem[] = [
   { label: 'Interview Q&A', href: '/interview', description: 'Prep questions' },
   { label: 'JVM Flags Lab', href: '/jvm-flags', description: 'Interactive tuning' },
   { label: 'Virtual Threads', href: '/virtual-threads', description: 'Project Loom' },
+  { label: 'Bytecode', href: '/bytecode', description: 'Bytecode playground' },
+  { label: 'Profiling', href: '/profiling', description: 'Troubleshooting tools' },
 ];

@@ -110,7 +110,7 @@ export default function Navigation() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 8, scale: 0.96 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute right-0 top-full mt-2 w-56 glass-card p-1.5 shadow-2xl shadow-black/40"
+                    className="absolute right-0 top-full mt-2 w-56 rounded-xl border border-white/[0.1] bg-[#0c1222]/95 backdrop-blur-xl p-1.5 shadow-2xl shadow-black/60"
                   >
                     {secondaryNav.map((item) => (
                       <Link
@@ -136,7 +136,7 @@ export default function Navigation() {
           </div>
 
           {/* Right CTA */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-5">
             <Link
               href="/about"
               className={cn(
