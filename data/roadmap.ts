@@ -2,6 +2,16 @@ import type { RoadmapItem } from '@/types';
 
 export const roadmapItems: RoadmapItem[] = [
   {
+    id: 0,
+    title: 'How Java Runs',
+    description: 'The complete journey from .java source to running output. JVM vs JRE vs JDK explained.',
+    href: '/how-java-runs',
+    color: '#3B82F6',
+    icon: 'Play',
+    topics: ['Source → Bytecode → Execution', 'JVM vs JRE vs JDK', 'Platform Independence', 'Compilation Flow'],
+    level: 'Foundational',
+  },
+  {
     id: 1,
     title: 'JVM Architecture',
     description: 'Understand the high-level structure of the JVM and how its subsystems interact.',

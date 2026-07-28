@@ -1,6 +1,7 @@
 import type { NavItem } from '@/types';
 
 export const navItems: NavItem[] = [
+  { label: 'How Java Runs', href: '/how-java-runs', description: 'Start here' },
   { label: 'Architecture', href: '/architecture', description: 'JVM component overview' },
   { label: 'Heap vs Stack', href: '/heap-stack', description: 'Memory regions explained' },
   { label: 'Class Loader', href: '/class-loader', description: 'Class loading lifecycle' },
