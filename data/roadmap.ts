@@ -121,4 +121,14 @@ export const roadmapItems: RoadmapItem[] = [
     topics: ['Operand Stack', 'Local Variables', 'Opcodes', 'Stack Machine'],
     level: 'Intermediate',
   },
+  {
+    id: 12,
+    title: 'Profiling & Troubleshooting',
+    description: 'Master jstack, jmap, jstat, jcmd, and JFR. Diagnose memory leaks, deadlocks, and performance issues.',
+    href: '/profiling',
+    color: '#EF4444',
+    icon: 'Activity',
+    topics: ['jstack', 'jmap', 'jstat', 'JFR', 'Heap Dumps', 'Thread Dumps'],
+    level: 'Intermediate',
+  },
 ];
