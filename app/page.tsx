@@ -6,7 +6,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import {
   ArrowRight, Cpu, Layers, Package, Zap, Trash2, GitBranch, Shield,
   MessageSquare, ChevronRight, Star, Code2, BookOpen, Play, SlidersHorizontal,
-  Workflow, Activity, Droplets,
+  Workflow, Activity, Droplets, Gauge, Timer, HardDrive,
 } from 'lucide-react';
 import GlassCard from '@/components/ui/GlassCard';
 import AnimatedSection, { StaggerContainer, StaggerItem } from '@/components/ui/AnimatedSection';
@@ -16,7 +16,7 @@ import { roadmapItems } from '@/data/roadmap';
 
 const iconMap: Record<string, React.ElementType> = {
   Cpu, Layers, Package, Zap, Trash2, GitBranch, Shield, MessageSquare, Play, Code2,
-  SlidersHorizontal, Workflow, Activity, Droplets,
+  SlidersHorizontal, Workflow, Activity, Droplets, Gauge, Timer, HardDrive,
 };
 
 const levelColor: Record<string, string> = {
