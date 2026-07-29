@@ -348,6 +348,75 @@ try {
             />
           </AnimatedSection>
         </div>
+        {/* Synchronization Internals */}
+        <AnimatedSection delay={0.2}>
+          <GlassCard className="p-6">
+            <h2 className="text-lg font-bold text-white mb-2">Synchronization Internals</h2>
+            <p className="text-xs text-slate-500 mb-5">How the JVM implements the synchronized keyword at the bytecode and hardware level.</p>
+
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <div className="space-y-4">
+                <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+                  <h4 className="text-xs font-bold text-blue-400 mb-2">Bytecode Level</h4>
+                  <p className="text-[10px] text-slate-400 leading-relaxed">
+                    The compiler translates <code className="text-blue-300">synchronized</code> blocks into
+                    <code className="text-blue-300"> monitorenter</code> and <code className="text-blue-300">monitorexit</code> bytecodes.
+                    Each object has an associated monitor. A thread must acquire the monitor before entering the block
+                    and release it when exiting (including via exception).
+                  </p>
+                </div>
+                <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+                  <h4 className="text-xs font-bold text-purple-400 mb-2">Object Header (Mark Word)</h4>
+                  <p className="text-[10px] text-slate-400 leading-relaxed">
+                    Every Java object has a mark word in its header (64 bits on 64-bit JVM). The mark word stores:
+                    identity hashCode, GC age, and <strong className="text-white">lock state bits</strong>.
+                    The lock state determines which locking mechanism is active: biased, thin, or fat.
+                  </p>
+                </div>
+              </div>
+              <div className="space-y-3">
+                {[
+                  { state: 'Biased Lock', color: '#10B981', desc: 'Optimistic: assumes only one thread ever uses this lock. Zero CAS operations. Mark word stores the biasing thread ID. If another thread tries to acquire, bias is revoked (requires safepoint). Deprecated since Java 15.' },
+                  { state: 'Thin Lock (Lightweight)', color: '#F59E0B', desc: 'Uses CAS to write the lock record pointer into the mark word. No OS involvement. Spins briefly if contested. If spin fails or multiple threads wait, inflates to fat lock.' },
+                  { state: 'Fat Lock (Heavyweight)', color: '#EF4444', desc: 'Allocates an OS mutex (ObjectMonitor in HotSpot). Threads that fail to acquire are parked by the OS (context switch). Used when real contention exists. Most expensive but fair.' },
+                ].map((item) => (
+                  <div key={item.state} className="rounded-xl border p-3" style={{ borderColor: `${item.color}25`, backgroundColor: `${item.color}05` }}>
+                    <h4 className="text-xs font-bold mb-1" style={{ color: item.color }}>{item.state}</h4>
+                    <p className="text-[10px] text-slate-400 leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <CodeBlock
+              title="Lock escalation flow"
+              language="java"
+              showLineNumbers
+              code={`// Lock state transitions in the object header mark word:
+//
+// No lock → Biased Lock → Thin Lock → Fat Lock
+//            (one thread)   (CAS spin)   (OS mutex)
+//
+// Bytecode for synchronized block:
+//   monitorenter  ← acquire object's monitor
+//   ... critical section ...
+//   monitorexit   ← release object's monitor
+//   monitorexit   ← second exit for exception path
+//
+// JVM optimization: Lock Coarsening
+synchronized(obj) { x++; }
+synchronized(obj) { y++; }
+// JIT merges into:
+synchronized(obj) { x++; y++; }  // one lock/unlock
+//
+// JVM optimization: Lock Elision (via Escape Analysis)
+void local() {
+    Object lock = new Object(); // never escapes
+    synchronized(lock) { ... }  // JIT removes entirely
+}`}
+            />
+          </GlassCard>
+        </AnimatedSection>
       </div>
     </div>
   );

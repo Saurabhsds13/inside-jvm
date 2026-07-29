@@ -15,7 +15,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-white/[0.06] bg-[#060b14]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-2.5 mb-4 group">
@@ -44,11 +44,11 @@ export default function Footer() {
             </a>
           </div>
 
-          {/* Topics */}
+          {/* Foundations */}
           <div>
-            <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-widest mb-4">Topics</h3>
+            <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-widest mb-4">Foundations</h3>
             <ul className="space-y-2">
-              {navItems.slice(0, 5).map((item) => (
+              {navItems.slice(0, 6).map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
@@ -61,11 +61,28 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* More Topics */}
+          {/* Intermediate */}
           <div>
-            <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-widest mb-4">More Topics</h3>
+            <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-widest mb-4">Intermediate</h3>
             <ul className="space-y-2">
-              {navItems.slice(5).map((item) => (
+              {navItems.slice(6, 12).map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-sm text-slate-500 hover:text-slate-200 transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Advanced */}
+          <div>
+            <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-widest mb-4">Advanced</h3>
+            <ul className="space-y-2">
+              {navItems.slice(12).map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}

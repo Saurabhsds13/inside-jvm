@@ -110,8 +110,9 @@ export default function Navigation() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 8, scale: 0.96 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute right-0 top-full mt-2 w-56 rounded-xl border border-white/[0.1] bg-[#0c1222]/95 backdrop-blur-xl p-1.5 shadow-2xl shadow-black/60"
+                    className="absolute right-0 top-full mt-2 w-[420px] rounded-xl border border-white/[0.1] bg-[#0c1222]/95 backdrop-blur-xl p-2 shadow-2xl shadow-black/60"
                   >
+                    <div className="grid grid-cols-2 gap-0.5">
                     {secondaryNav.map((item) => (
                       <Link
                         key={item.href}
@@ -129,6 +130,7 @@ export default function Navigation() {
                         )}
                       </Link>
                     ))}
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
