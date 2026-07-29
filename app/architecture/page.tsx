@@ -60,7 +60,7 @@ const initialNodes: Node[] = [
     data: { label: 'Metaspace', subtitle: 'Class Metadata', color: '#EC4899', bgColor: 'rgba(236,72,153,0.1)', borderColor: 'rgba(236,72,153,0.4)' } },
   { id: 'stack', type: 'jvm', position: { x: 380, y: 440 },
     data: { label: 'JVM Stack', subtitle: 'Per Thread', color: '#06B6D4', bgColor: 'rgba(6,182,212,0.1)', borderColor: 'rgba(6,182,212,0.4)' } },
-  { id: 'pc', type: 'jvm', position: { x: 520, y: 440 },
+  { id: 'pc', type: 'jvm', position: { x: 540, y: 440 },
     data: { label: 'PC Register', subtitle: 'Per Thread', color: '#06B6D4', bgColor: 'rgba(6,182,212,0.08)', borderColor: 'rgba(6,182,212,0.3)' } },
 
   // Execution Engine
@@ -74,9 +74,9 @@ const initialNodes: Node[] = [
     data: { label: 'Garbage Collector', subtitle: 'G1 / ZGC / Serial', color: '#F59E0B', bgColor: 'rgba(245,158,11,0.1)', borderColor: 'rgba(245,158,11,0.4)' } },
 
   // JNI
-  { id: 'jni', type: 'jvm', position: { x: 560, y: 320 },
+  { id: 'jni', type: 'jvm', position: { x: 700, y: 320 },
     data: { label: 'JNI', subtitle: 'Native Bridge', color: '#EC4899', bgColor: 'rgba(236,72,153,0.1)', borderColor: 'rgba(236,72,153,0.4)' } },
-  { id: 'nativelibs', type: 'jvm', position: { x: 560, y: 440 },
+  { id: 'nativelibs', type: 'jvm', position: { x: 700, y: 440 },
     data: { label: 'Native Libs', subtitle: '.dll / .so', color: '#06B6D4', bgColor: 'rgba(6,182,212,0.1)', borderColor: 'rgba(6,182,212,0.3)' } },
 ];
 
