@@ -131,4 +131,14 @@ export const roadmapItems: RoadmapItem[] = [
     topics: ['jstack', 'jmap', 'jstat', 'JFR', 'Heap Dumps', 'Thread Dumps'],
     level: 'Intermediate',
   },
+  {
+    id: 13,
+    title: 'Memory Leaks & GC Tuning',
+    description: 'Identify and fix common leak patterns. Master GC tuning for production workloads.',
+    href: '/memory-leaks',
+    color: '#8B5CF6',
+    icon: 'Droplets',
+    topics: ['Leak Patterns', 'Heap Dump Analysis', 'GC Tuning', 'Production Scenarios'],
+    level: 'Advanced',
+  },
 ];

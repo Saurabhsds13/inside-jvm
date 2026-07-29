@@ -14,4 +14,5 @@ export const navItems: NavItem[] = [
   { label: 'Virtual Threads', href: '/virtual-threads', description: 'Project Loom' },
   { label: 'Bytecode', href: '/bytecode', description: 'Bytecode playground' },
   { label: 'Profiling', href: '/profiling', description: 'Troubleshooting tools' },
+  { label: 'Memory Leaks', href: '/memory-leaks', description: 'Leaks & GC tuning' },
 ];
